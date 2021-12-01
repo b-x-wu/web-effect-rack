@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    script(src="js/jquery.js")
+    script(src="js/webpd-latest.js")
+    title Pure Data Final
+  body
+    h3 Test osc~
+    fieldset
+      input(type="text", placeholder="Frequency", id="inputFreq")
+      button(id="buttonOsc") Start
+    h3 Test adc~
+    fieldset
+      button(id="buttonAdc") Start
+    h2 Effect Rack
+    button(id="buttonEffectRack") Start Effect Rack
+    button(id="buttonClearEffectRack") Clear Effect Rack
+    fieldset
+      input(type="text", placeholder="Delay Time (0 - 1000 ms)", id="inputDelayDelayTime")
+      input(type="text", placeholder="Feedback Gain (0 - 100 percent)", id="inputDelayFeedbackGain")
+      button(id="buttonAddDelay") Add Delay
+    fieldset
+      input(type="text", placeholder="Cutoff (pitch units)", id="inputBpCutoff")
+      input(type="text", placeholder="Q", id="inputBpQ")
+      button(id="buttonAddBp") Add Bp
+    div(id="effectRack")
+  script(src="js/testing.js")
+  script(src="js/effect-rack.js")
+  script(src="js/global.js")
+  
