@@ -4,10 +4,12 @@ $(document).ready(() => {
 	$('#buttonAdc').on('click', handleClickAdc);
 
 	$('#buttonAddDelay').on('click', handleAddDelay);
-	$('#buttonAddBp').on('click', handleAddBp)
+	$('#buttonAddBp').on('click', handleAddBp);
+	$('#buttonAddNoise').on('click', handleAddNoise);
 
-	$('#buttonEffectRack').on('click', handleEffectRack)
+	$('#buttonEffectRack').on('click', handleEffectRack);
 	$('#buttonClearEffectRack').on('click', clearEffectRack);
+	$('#inputGain').on('change', handleGainChange);
 })
 
 function openPd() {
@@ -27,17 +29,11 @@ function openPd() {
 		console.log("pd ready");
 	});
 
-	// register abstractions
-	$.get('patches/delayAbs~.pd', (delayPatchStr) => {
-		Pd.registerAbstraction('delayAbs~', delayPatchStr);
-	});
-
-	$.get('patches/bpAbs~.pd', (bpPatchStr) => {
-		Pd.registerAbstraction('bpAbs~', bpPatchStr);
-	});
-
 	// create the effect rack patch
 	effectRackPatch = Pd.createPatch();
 	adcEffectRack = effectRackPatch.createObject('adc~');
+	gainEffectRack = effectRackPatch.createObject('*~', [1]);
 	dacEffectRack = effectRackPatch.createObject('dac~');
+	gainEffectRack.o(0).connect(dacEffectRack.i(0));
+	gainEffectRack.o(0).connect(dacEffectRack.i(1));
 }
