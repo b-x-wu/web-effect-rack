@@ -1,3 +1,21 @@
+$(document).ready(() => {
+	openPd();
+	$('#buttonOsc').on('click', handleClickOsc);
+	$('#buttonAdc').on('click', handleClickAdc);
+});
+
+function openPd() {
+	var	buttonOsc = document.getElementById("buttonOsc");
+	Pd.startOnClick(buttonOsc, () => {
+		console.log("pd ready");
+	});
+
+	var buttonAdc = document.getElementById("buttonAdc");
+	Pd.startOnClick(buttonAdc, () => {
+		console.log("pd ready");
+	});
+}
+
 var oscOn = false;
 var adcOn = false;
 var oscPatch;

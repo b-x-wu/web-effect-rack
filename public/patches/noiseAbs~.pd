@@ -3,7 +3,7 @@
 #X obj 406 129 noise~;
 #X obj 592 82 loadbang;
 #X obj 592 106 f \$1;
-#X obj 592 154 s \$0-noisepercent;
+#X obj 592 186 s \$0-noisepercent;
 #X obj 424 160 r \$0-noisepercent;
 #X obj 743 88 r \$0-noisepercent;
 #X obj 743 112 - 1;
@@ -15,11 +15,13 @@
 #X obj 363 221 +~;
 #X obj 363 245 outlet~;
 #X text 311 54 arg1: percent of output that is noise;
-#X obj 592 130 / 100;
+#X obj 592 162 / 100;
+#X obj 665 82 inlet;
+#X floatatom 592 130 5 0 0 0 - - -;
 #X connect 0 0 11 0;
 #X connect 1 0 10 0;
 #X connect 2 0 3 0;
-#X connect 3 0 16 0;
+#X connect 3 0 18 0;
 #X connect 5 0 10 1;
 #X connect 6 0 7 0;
 #X connect 7 0 8 0;
@@ -29,3 +31,5 @@
 #X connect 12 0 11 1;
 #X connect 13 0 14 0;
 #X connect 16 0 4 0;
+#X connect 17 0 18 0;
+#X connect 18 0 16 0;

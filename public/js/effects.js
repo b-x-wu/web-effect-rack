@@ -13,7 +13,7 @@ function handleAddDelay(event) {
 		disconnectObjects();
 		Pd.registerAbstraction('delayAbs~', delayPatchStr);
 		effectRack.push(effectRackPatch.createObject('delayAbs~', [delayTime, feedbackGain]));
-		connectObjects();
+		if (effectRackOn) {connectObjects()};
 
 		// add div to page
 		var delayDiv = document.createElement('div');
@@ -57,13 +57,15 @@ function handleAddDelay(event) {
 		$('.effectChange').on('change', handleEffectChange);
 		$('.deleteButton').off();
 		$('.deleteButton').on('click', handleEffectDelete);
+
 	});
 }
 
-function handleDelayChange(event) {
+function handleDelayChange(event, index) {
 	var argsNodeList = event.currentTarget.parentElement.getElementsByTagName("input");
 	var args = Array.from(argsNodeList).map(node => parseInt(node.value));
-	return effectRackPatch.createObject('delayAbs~', args);
+	effectRack[index].i(1).message([args[0]]);
+	effectRack[index].i(2).message([args[1]]);
 }
 
 // BP
@@ -80,7 +82,7 @@ function handleAddBp(event) {
 		disconnectObjects();
 		Pd.registerAbstraction('bpAbs~', bpPatchStr);
 		effectRack.push(effectRackPatch.createObject('bpAbs~', [cutoff, q]));
-		connectObjects();
+		if (effectRackOn) {connectObjects()};
 
 		var bpDiv = document.createElement('div');
 		setAttributes(bpDiv, {"class" : "effect", "id" : "effect" + String(index)});
@@ -124,10 +126,11 @@ function handleAddBp(event) {
 	});
 }
 
-function handleBpChange(event) {
+function handleBpChange(event, index) {
 	var argsNodeList = event.currentTarget.parentElement.getElementsByTagName("input");
 	var args = Array.from(argsNodeList).map(node => parseInt(node.value));
-	return effectRackPatch.createObject('bpAbs~', args);
+	effectRack[index].i(1).message([args[0]]);
+	effectRack[index].i(2).message([args[1]]);
 }
 
 // NOISE
@@ -143,7 +146,7 @@ function handleAddNoise(event) {
 		disconnectObjects();
 		Pd.registerAbstraction('noiseAbs~', noisePatchStr);
 		effectRack.push(effectRackPatch.createObject('noiseAbs~', [level]));
-		connectObjects();
+		if (effectRackOn) {connectObjects()};
 
 		var noiseDiv = document.createElement('div');
 		setAttributes(noiseDiv, {"class" : "effect", "id" : "effect" + String(index)});
@@ -177,8 +180,8 @@ function handleAddNoise(event) {
 	});
 }
 
-function handleNoiseChange(event) {
+function handleNoiseChange(event, index) {
 	var argsNodeList = event.currentTarget.parentElement.getElementsByTagName("input");
 	var args = Array.from(argsNodeList).map(node => parseFloat(node.value));
-	return effectRackPatch.createObject('noiseAbs~', args);
+	effectRack[index].i(1).message([args[0]]);
 }

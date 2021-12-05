@@ -1,0 +1,26 @@
+extends ./layout.jade
+
+block title
+  title Pure Data Final | Show Patches
+
+block preLoad
+  script(src="../js/jquery.js")
+  script(src="../js/webpd-latest.js")
+  script(src="../js/util.js")
+  script(src="../js/pd-fileutils-latest.js")
+  link(rel="stylesheet", href="../stylesheets/style.css")
+
+block content
+  div Patches used in the effect rack
+    button(id="showDelay") delayAbs~
+    button(id="showBp") bpAbs~
+    button(id="showNoise") noiseAbs~
+  div Patches not used in the effect rack*
+    button(id="showOctave") octaveAbs~
+    button(id="showReverb") reverbAbs~
+    button(id="showShaker") shakerAbs~
+  div(id="svg")
+  p *WebPD only supports for #[a(href="https://github.com/sebpiq/WebPd/blob/master/OBJECTLIST.md") limited objects], making the following patches unviable
+
+block postLoad
+  script(src="../js/patches.js")

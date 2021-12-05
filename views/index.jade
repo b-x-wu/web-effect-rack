@@ -1,20 +1,17 @@
-doctype html
-html
-  head
-    script(src="js/jquery.js")
-    script(src="js/webpd-latest.js")
-    script(src="js/util.js")
-    link(rel="stylesheet", href="stylesheets/style.css")
-    title Pure Data Final
-  body
-    h3 Test osc~
-    fieldset
-      input(type="text", placeholder="Frequency", id="inputFreq")
-      button(id="buttonOsc") Start
-    h3 Test adc~
-    fieldset
-      button(id="buttonAdc") Start
-    h2 Effect Rack
+extends ./layout.jade
+
+block title
+  title Pure Data Final | Effect Rack
+
+block preLoad
+  script(src="js/jquery.js")
+  script(src="js/webpd-latest.js")
+  script(src="js/util.js")
+  link(rel="stylesheet", href="stylesheets/style.css")
+
+block content
+  div(id="addEffects")
+    h2 Add Effects
     button(id="buttonEffectRack") Start Effect Rack
     button(id="buttonClearEffectRack") Clear Effect Rack
     div Gain
@@ -30,9 +27,11 @@ html
     fieldset
       input(type="text", placeholder="Level (0 - 100 percent)", id="inputNoiseLevel")
       button(id="buttonAddNoise") Add Noise
+  div(id="effectRackWrapper")
+    h2 Effect Rack
     div(id="effectRack")
+
+block postLoad
   script(src="js/effects.js")
   script(src="js/effect-rack.js")
-  script(src="js/testing.js")
   script(src="js/global.js")
-  

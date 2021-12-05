@@ -17,22 +17,27 @@ function handleEffectRack(event) {
 }
 
 function connectObjects() {
+	Pd.start();
+
 	for (let i = 0; i < effectRack.length; i++) {
-		if (i === 0) {
+		if (i === 0) { // connect adc to the first effect
 			adcEffectRack.o(0).connect(effectRack[0].i(0));
-		} else {
+		} else { // connect effects to each other
 			effectRack[i - 1].o(0).connect(effectRack[i].i(0));
 		}
 	}
 
-	if (effectRack.length > 0) {
+	if (effectRack.length > 0) { // connect effects to gain
 		effectRack[effectRack.length - 1].o(0).connect(gainEffectRack.i(0));
-	} else {
+	} else { // connect adc to gain
 		adcEffectRack.o(0).connect(gainEffectRack.i(0));
 	}
+
 }
 
 function disconnectObjects() {
+	Pd.stop();
+
 	for (let i = 0; i < effectRack.length; i++) {
 		if (i === 0) {
 			adcEffectRack.o(0).disconnect(effectRack[0].i(0));
@@ -51,6 +56,7 @@ function disconnectObjects() {
 function startEffectRack() {
 	connectObjects();
 	$('#buttonEffectRack').html("Stop Effect Rack");
+	console.log(effectRackPatch);
 }
 
 function stopEffectRack() {
@@ -60,9 +66,16 @@ function stopEffectRack() {
 
 function clearEffectRack(event) {
 	event.preventDefault();
-	stopEffectRack();
 	effectRackOn = false;
 	effectRack = [];
+
+	Pd.start();
+	Pd.destroyPatch(effectRackPatch);
+	Pd.stop();
+
+	openPd();
+
+	$('#buttonEffectRack').html("Start Effect Rack");
 	$('#effectRack').html('');
 }
 
@@ -72,21 +85,19 @@ function handleGainChange(event) {
 }
 
 function handleEffectChange(event) {
-	disconnectObjects();
 	var index = event.currentTarget.parentElement.id.slice(6);
 	var selectedEffect = event.currentTarget.parentElement.getElementsByTagName("div")[0].className;
 	switch (selectedEffect) {
 		case "delay":
-			effectRack[index] = handleDelayChange(event);
+			handleDelayChange(event, index);
 			break;
 		case "bp":
-			effectRack[index] = handleBpChange(event);
+			handleBpChange(event, index);
 			break;
 		case "noise":
-			effectRack[index] = handleNoiseChange(event);
+			handleNoiseChange(event, index);
 			break;
 	}
-	connectObjects();
 }
 
 function handleEffectDelete(event) {
@@ -96,7 +107,7 @@ function handleEffectDelete(event) {
 	// remove element from effectRack
 	disconnectObjects();
 	effectRack.splice(index, 1);
-	connectObjects();
+	if (effectRackOn) {connectObjects()};
 
 	// remove child from parentDiv
 	parentDiv.removeChild(parentDiv.childNodes[index]);
@@ -107,6 +118,5 @@ function handleEffectDelete(event) {
 	}
 }
 
-// phasing, pitch shifters, harmonizers, compression, shaker, pvoc.reverb.pd, octave.doubler.pd
 // add waveform and vu meter visualization
 // add css
