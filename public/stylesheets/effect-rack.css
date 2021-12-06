@@ -1,0 +1,52 @@
+.rack-controls button {
+  margin-right: 5px;
+}
+
+input[type="text"] {
+  margin: 2px;
+}
+
+input[type="range"] {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.add-effect input, .add-effect button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.add-effect {
+  margin-top: 3px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: #ededed;
+}
+
+.add-effect button {
+  float: right;
+}
+
+.effect {
+  margin: 5px;
+  padding: 10px;
+  background-color: #ededed;
+}
+
+h4 {
+  font-size: large;
+}
+
+.btn-close {
+  width: 1em;
+  height: 1em;
+  background-color: #df4759;  
+}
+
+output {
+  float: right;
+}
+
+.effect-sliders {
+  margin-top: 5px;
+}

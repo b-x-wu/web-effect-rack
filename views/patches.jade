@@ -8,19 +8,25 @@ block preLoad
   script(src="../js/webpd-latest.js")
   script(src="../js/util.js")
   script(src="../js/pd-fileutils-latest.js")
-  link(rel="stylesheet", href="../stylesheets/style.css")
+  link(rel="stylesheet", href="../stylesheets/global.css")
+  link(rel="stylesheet", href="../stylesheets/patches.css")
 
 block content
-  div Patches used in the effect rack
-    button(id="showDelay") delayAbs~
-    button(id="showBp") bpAbs~
-    button(id="showNoise") noiseAbs~
-  div Patches not used in the effect rack*
-    button(id="showOctave") octaveAbs~
-    button(id="showReverb") reverbAbs~
-    button(id="showShaker") shakerAbs~
+  div(class="row")
+    div(id="used-patches", class="col-md")
+      p Patches used in the effect rack
+      div(id="button-wrapper")
+        button(id="showDelay") delayAbs~
+        button(id="showBp") bpAbs~
+        button(id="showNoise") noiseAbs~
+    div(id="unused-patches", class="col-md") 
+      p Patches not used in the effect rack*
+      div(id="button-wrapper")
+        button(id="showOctave") octaveAbs~
+        button(id="showReverb") reverbAbs~
+        button(id="showShaker") shakerAbs~
   div(id="svg")
-  p *WebPD only supports for #[a(href="https://github.com/sebpiq/WebPd/blob/master/OBJECTLIST.md") limited objects], making the following patches unviable
+  p(id="asterisk", class="text-muted") *WebPD supports #[a(href="https://github.com/sebpiq/WebPd/blob/master/OBJECTLIST.md") a limited set of PD objects], making the following patches unviable
 
 block postLoad
   script(src="../js/patches.js")

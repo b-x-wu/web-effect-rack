@@ -1,0 +1,29 @@
+a {
+  color: #00B7FF;
+}
+
+nav {
+  margin-bottom: 15px;
+}
+
+footer p {
+  margin: 0px;
+  font-size: smaller;
+}
+
+button {
+  background-color: white;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: x-small;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  font-size: x-small;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  font-size: x-small;
+}
+:-moz-placeholder { /* Firefox 18- */
+  font-size: x-small;
+}

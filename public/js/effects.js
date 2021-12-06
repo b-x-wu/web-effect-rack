@@ -15,37 +15,7 @@ function handleAddDelay(event) {
 		effectRack.push(effectRackPatch.createObject('delayAbs~', [delayTime, feedbackGain]));
 		if (effectRackOn) {connectObjects()};
 
-		// add div to page
-		var delayDiv = document.createElement('div');
-		setAttributes(delayDiv, {"class" : "effect", "id" : "effect" + String(index)});
-
-		var delayTimeSlider = document.createElement('input');
-		setAttributes(delayTimeSlider, {
-				"type" : "range",
-				"min" : "0",
-				"max" : "1000",
-				"value" : String(delayTime),
-				"class" : "effectChange"
-			});
-
-		var feedbackGainSlider = document.createElement('input');
-		setAttributes(feedbackGainSlider, {
-				"type" : "range",
-				"min" : "0",
-				"max" : "100",
-				"value" : String(feedbackGain),
-				"class" : "effectChange"
-			});
-
-		var title = document.createElement('div');
-		title.setAttribute("class", "delay");
-		title.innerHTML = "DELAY"
-
-		var deleteButton = document.createElement('button');
-		deleteButton.setAttribute("class", "deleteButton");
-		deleteButton.innerHTML = "(delete)";
-
-		delayDiv.append(title, deleteButton, "Delay Time", delayTimeSlider, "Feedback Gain", feedbackGainSlider);
+		var delayDiv = effectDiv(index, "delay", {"delayTime" : ["Delay Time", delayTime, 0, 1000], "feedbackGain" : ["Feedback Gain", feedbackGain, 0, 100]});
 		$('#effectRack').append(delayDiv);
 
 		// clear input fields
@@ -62,10 +32,17 @@ function handleAddDelay(event) {
 }
 
 function handleDelayChange(event, index) {
-	var argsNodeList = event.currentTarget.parentElement.getElementsByTagName("input");
+	// change patch object
+	var argsNodeList = event.currentTarget.parentElement.parentElement.parentElement.getElementsByTagName("input");
 	var args = Array.from(argsNodeList).map(node => parseInt(node.value));
 	effectRack[index].i(1).message([args[0]]);
 	effectRack[index].i(2).message([args[1]]);
+
+	// change output value
+	for (let i = 0; i < args.length; i++) {
+		event.currentTarget.parentElement.parentElement.parentElement.getElementsByTagName('output')[i].innerHTML = String(args[i]);
+	}
+
 }
 
 // BP
@@ -84,36 +61,7 @@ function handleAddBp(event) {
 		effectRack.push(effectRackPatch.createObject('bpAbs~', [cutoff, q]));
 		if (effectRackOn) {connectObjects()};
 
-		var bpDiv = document.createElement('div');
-		setAttributes(bpDiv, {"class" : "effect", "id" : "effect" + String(index)});
-
-		var cutoffSlider = document.createElement('input');
-		setAttributes(cutoffSlider, {
-				"type" : "range",
-				"min" : "0",
-				"max" : "500",
-				"value" : String(cutoff),
-				"class" : "effectChange"
-			});
-
-		var qSlider = document.createElement('input');
-		setAttributes(qSlider, {
-				"type" : "range",
-				"min" : "0",
-				"max" : "100",
-				"value" : String(q),
-				"class" : "effectChange"
-			});
-
-		var title = document.createElement('div');
-		title.setAttribute("class", "bp");
-		title.innerHTML = "BP"
-
-		var deleteButton = document.createElement('button');
-		deleteButton.setAttribute("class", "deleteButton");
-		deleteButton.innerHTML = "(delete)";
-
-		bpDiv.append(title, deleteButton, "Cutoff", cutoffSlider, "Q", qSlider);
+		var bpDiv = effectDiv(index, "bp", {"cutoff" : ["Cutoff", cutoff, 0, 500], "q" : ["Q", q, 0, 100]});
 		$('#effectRack').append(bpDiv);
 
 		$('#inputBpCutoff').val('');
@@ -127,10 +75,15 @@ function handleAddBp(event) {
 }
 
 function handleBpChange(event, index) {
-	var argsNodeList = event.currentTarget.parentElement.getElementsByTagName("input");
+	var argsNodeList = event.currentTarget.parentElement.parentElement.parentElement.getElementsByTagName("input");
 	var args = Array.from(argsNodeList).map(node => parseInt(node.value));
+	console.log(argsNodeList)
 	effectRack[index].i(1).message([args[0]]);
 	effectRack[index].i(2).message([args[1]]);
+
+	for (let i = 0; i < args.length; i++) {
+		event.currentTarget.parentElement.parentElement.parentElement.getElementsByTagName('output')[i].innerHTML = String(args[i]);
+	}
 }
 
 // NOISE
@@ -148,27 +101,7 @@ function handleAddNoise(event) {
 		effectRack.push(effectRackPatch.createObject('noiseAbs~', [level]));
 		if (effectRackOn) {connectObjects()};
 
-		var noiseDiv = document.createElement('div');
-		setAttributes(noiseDiv, {"class" : "effect", "id" : "effect" + String(index)});
-
-		var levelSlider = document.createElement('input');
-		setAttributes(levelSlider, {
-				"type" : "range",
-				"min" : "0",
-				"max" : "100",
-				"value" : String(level),
-				"class" : "effectChange"
-			});
-
-		var title = document.createElement('div');
-		title.setAttribute("class", "noise");
-		title.innerHTML = "NOISE"
-
-		var deleteButton = document.createElement('button');
-		deleteButton.setAttribute("class", "deleteButton");
-		deleteButton.innerHTML = "(delete)";
-
-		noiseDiv.append(title, deleteButton, "Level", levelSlider);
+		var noiseDiv = effectDiv(index, "noise", {"level" : ["Level", level, 0, 100]});
 		$('#effectRack').append(noiseDiv);
 
 		$('#inputNoiseLevel').val('');
@@ -181,7 +114,11 @@ function handleAddNoise(event) {
 }
 
 function handleNoiseChange(event, index) {
-	var argsNodeList = event.currentTarget.parentElement.getElementsByTagName("input");
+	var argsNodeList = event.currentTarget.parentElement.parentElement.parentElement.getElementsByTagName("input");
 	var args = Array.from(argsNodeList).map(node => parseFloat(node.value));
 	effectRack[index].i(1).message([args[0]]);
+
+	for (let i = 0; i < args.length; i++) {
+		event.currentTarget.parentElement.parentElement.parentElement.getElementsByTagName('output')[i].innerHTML = String(args[i]);
+	}
 }

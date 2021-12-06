@@ -85,8 +85,10 @@ function handleGainChange(event) {
 }
 
 function handleEffectChange(event) {
-	var index = event.currentTarget.parentElement.id.slice(6);
-	var selectedEffect = event.currentTarget.parentElement.getElementsByTagName("div")[0].className;
+	var index = event.currentTarget.parentElement.parentElement.parentElement.id.slice(6);
+	var selectedEffect = event.currentTarget.className.split(' ')[0];
+	console.log(index);
+	console.log(selectedEffect);
 	switch (selectedEffect) {
 		case "delay":
 			handleDelayChange(event, index);
@@ -101,8 +103,8 @@ function handleEffectChange(event) {
 }
 
 function handleEffectDelete(event) {
-	var index = event.currentTarget.parentElement.id.slice(6);
-	var parentDiv = event.currentTarget.parentElement.parentElement;
+	var index = event.currentTarget.parentElement.parentElement.parentElement.id.slice(6);
+	var parentDiv = event.currentTarget.parentElement.parentElement.parentElement.parentElement;
 
 	// remove element from effectRack
 	disconnectObjects();
@@ -116,6 +118,17 @@ function handleEffectDelete(event) {
 	for (let i = 0; i < effectRack.length; i++) {
 		parentDiv.childNodes[i].id = "effect" + String(i);
 	}
+}
+
+function effectDiv(index, effect, params) {
+	// params = {'paramName' : ['paramPrintString', initVal, min, max]}
+	var htmlString = '<div class="effect container" id="effect' + String(index) + '"><div class="row"><div class="' + effect + ' col-md effect-title"> <h4>' + effect.toUpperCase() + '</h4> </div><div class="col-md" align="right"><button class="deleteButton btn-close"></button></div></div><div class="row effect-sliders">'
+	for (const param in params) {
+		htmlString += '<div class="col-md d-flex flex-column" align="left"><div class="effect-info"><label class="form-label" for="' + param + String(index) + '">' + params[param][0] + '</label><output for="' + param + String(index) + '">' + String(params[param][1]) + '</output></div><input class="' + effect + ' form-range effectChange" type="range" value="' + String(params[param][1]) + '" min="' + String(params[param][2]) + '" max="' + String(params[param][3]) + '" id="' + param + String(index) + '"/></div>'
+	}
+	htmlString += '</div></div>'
+
+	return createElementFromHTML(htmlString);
 }
 
 // add waveform and vu meter visualization

@@ -7,29 +7,33 @@ block preLoad
   script(src="js/jquery.js")
   script(src="js/webpd-latest.js")
   script(src="js/util.js")
-  link(rel="stylesheet", href="stylesheets/style.css")
+  link(rel="stylesheet", href="stylesheets/global.css")
+  link(rel="stylesheet", href="stylesheets/effect-rack.css")
 
 block content
-  div(id="addEffects")
-    h2 Add Effects
-    button(id="buttonEffectRack") Start Effect Rack
-    button(id="buttonClearEffectRack") Clear Effect Rack
-    div Gain
-      input(type="range", min="0", max="100", value="100", id="inputGain")
-    fieldset
-      input(type="text", placeholder="Delay Time (0 - 1000 ms)", id="inputDelayDelayTime")
-      input(type="text", placeholder="Feedback Gain (0 - 100 percent)", id="inputDelayFeedbackGain")
-      button(id="buttonAddDelay") Add Delay
-    fieldset
-      input(type="text", placeholder="Cutoff (0 - 500 pitch units)", id="inputBpCutoff")
-      input(type="text", placeholder="Q (0 - 100)", id="inputBpQ")
-      button(id="buttonAddBp") Add Bp
-    fieldset
-      input(type="text", placeholder="Level (0 - 100 percent)", id="inputNoiseLevel")
-      button(id="buttonAddNoise") Add Noise
-  div(id="effectRackWrapper")
-    h2 Effect Rack
-    div(id="effectRack")
+  div(class="row border-between")
+    div(id="addEffects", class="col-md")
+      h2 Add Effects
+      div(class="rack-controls")
+        button(id="buttonEffectRack") Start Effect Rack
+        button(id="buttonClearEffectRack") Clear Effect Rack
+      div(class="add-effect")
+        input(type="text", placeholder="Delay Time (0 - 1000 ms)", id="inputDelayDelayTime")
+        input(type="text", placeholder="Feedback Gain (0 - 100 percent)", id="inputDelayFeedbackGain")
+        button(id="buttonAddDelay") Add Delay
+      div(class="add-effect")
+        input(type="text", placeholder="Cutoff (0 - 500 pitch units)", id="inputBpCutoff")
+        input(type="text", placeholder="Q (0 - 100)", id="inputBpQ")
+        button(id="buttonAddBp") Add Bp
+      div(class="add-effect")
+        input(type="text", placeholder="Level (0 - 100 percent)", id="inputNoiseLevel")
+        button(id="buttonAddNoise") Add Noise
+    div(id="effectRackWrapper", class="col-md")
+      h2 Effect Rack
+      div(id="input-gain")
+        label(for="inputGain", class="form-label") Gain
+        input(type="range", min="0", max="100", value="100", id="inputGain", class="form-range")
+      div(id="effectRack")
 
 block postLoad
   script(src="js/effects.js")

@@ -69,7 +69,7 @@ function handleClickAdc() {
 }
 
 function startAdc() {
-	$.get('patches/adcTest.pd', (patchStr) => {
+	$.get('../patches/adcTest.pd', (patchStr) => {
 		adcPatch = Pd.loadPatch(patchStr);
 		$('#buttonAdc').html("Stop");
 	})
