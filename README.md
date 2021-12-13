@@ -1,4 +1,4 @@
-Final project for [Computer Music Theory and Techniques Using Pure Data](https://wp.nyu.edu/computer_music/) ] at NYU with Professor Jaime E. Oliver La Rosa
+Final project for [Computer Music Theory and Techniques Using Pure Data](https://wp.nyu.edu/computer_music/) at NYU with Professor Jaime E. Oliver La Rosa
 
 JavaScript Pure Data runtime provided by [WebPD](https://github.com/sebpiq/WebPd)
 
